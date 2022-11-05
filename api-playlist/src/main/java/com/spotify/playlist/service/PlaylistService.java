@@ -1,6 +1,7 @@
 package com.spotify.playlist.service;
 
 import com.spotify.playlist.client.MusicFeign;
+import com.spotify.playlist.model.PlayListMusic;
 import com.spotify.playlist.model.Playlist;
 import com.spotify.playlist.repository.PlaylistRepository;
 import org.springframework.stereotype.Service;
@@ -44,11 +45,14 @@ public class PlaylistService {
     }
 
     public void addMusic(Long idPlayList, Long idMusic) throws Exception {
-        if (playlistRepository.existsById(idPlayList)) {
+        var playList = playlistRepository.findById(idPlayList);
+        if (playList.isPresent()) {
             var result = musicFeign.getById(idMusic);
             if (result == null) {
               throw new Exception("Music not found");
             }
+            playList.get().getMusics().add(new PlayListMusic(null, playList.get(),result.getMusicId(),result.getName()));
+            playlistRepository.save(playList.get());
         }else{
             throw new Exception("Playlist not found");
         }

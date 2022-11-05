@@ -16,5 +16,6 @@ public interface MusicFeign {
     @Setter
     class Music {
         private Long musicId;
+        private String name;
     }
 }

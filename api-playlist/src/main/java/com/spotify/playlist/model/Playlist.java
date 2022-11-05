@@ -4,13 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -33,6 +34,10 @@ public class Playlist implements Serializable {
 
     @Column(name = "MGCOUNT", nullable = false, columnDefinition = " integer default 0")
     private Integer mgCount = 0;
+
+    @OneToMany(mappedBy = "playlist", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
+    private List<PlayListMusic> musics = new ArrayList<>();
 
 
 }
