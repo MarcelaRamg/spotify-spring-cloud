@@ -31,11 +31,11 @@ spring:
         locator:
           enabled: true
       routes:
-        - id: apiMusic
+        - id: api-music
           uri: lb://api-music
           predicates:
             - Path=/api/v1/musics/**
-        - id: apiPlaylist
+        - id: api-playlist
           uri: lb://api-playlist
           predicates:
             - Path=/api/v1/playlists/**
